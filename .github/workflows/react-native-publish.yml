@@ -1,0 +1,98 @@
+name: React Native Publish
+
+on:
+  push:
+    tags:
+      - 'v*.*.*-beta.*'
+      - 'v*.*.*'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          generate_release_notes: true
+
+  submit-android:
+    needs: [release]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Submit app to Google Play Beta
+        if: contains(github.ref, 'beta')
+        run: eas build --platform android --non-interactive --profile staging --auto-submit
+
+      - name: Submit app to Google Play
+        if: ${{ !contains(github.ref, 'beta') }}
+        run: eas build --platform android --non-interactive --profile production --auto-submit
+
+  submit-ios:
+    needs: [release]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Setup Expo
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Submit app to TestFlight
+        if: contains(github.ref, 'beta')
+        run: eas build --platform ios --non-interactive --profile staging --auto-submit
+
+      - name: Submit app to App Store
+        if: ${{ !contains(github.ref, 'beta') }}
+        run: eas build --platform ios --non-interactive --profile production --auto-submit

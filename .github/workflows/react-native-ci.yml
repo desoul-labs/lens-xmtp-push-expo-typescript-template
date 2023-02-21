@@ -1,0 +1,176 @@
+name: React Native CI
+
+on:
+  push:
+    branches:
+      - '**'
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
+      - '**.jsx'
+      - '.github/workflows/react-native-ci.yml'
+      - '**.json'
+      - '**.yaml'
+
+  pull_request:
+    branches:
+      - '**'
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
+      - '**.jsx'
+      - '.github/workflows/react-native-ci.yml'
+      - '**.json'
+      - '**.yaml'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm run lint
+
+  test:
+    needs: [lint]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit & Integration tests
+        run: pnpm run test:ci
+
+      - name: Upload to CodeCov
+        uses: codecov/codecov-action@v3
+
+  build-android:
+    needs: [lint]
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm install -g sharp-cli
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          java-version: 11
+          distribution: 'adopt'
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
+      - name: Build app
+        run: eas build --platform android --non-interactive --local
+
+      - name: Preview app
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'renovate[bot]'
+        run: eas build --platform android --non-interactive --profile preview
+
+  build-ios:
+    needs: [lint]
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'pnpm'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm install -g sharp-cli
+
+      - name: Setup CocoaPods
+        uses: maxim-lobanov/setup-cocoapods@v1
+        with:
+          version: latest
+
+      - name: Setup fastlane
+        run: sudo gem install fastlane
+
+      - name: Build app
+        run: eas build --platform ios --non-interactive --local
+
+      - name: Preview app
+        if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'renovate[bot]'
+        run: eas build --platform ios --non-interactive --profile preview

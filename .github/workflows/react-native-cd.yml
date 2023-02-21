@@ -1,0 +1,92 @@
+name: React Native CD
+
+on:
+  push:
+    branches:
+      - 'dev'
+      - 'main'
+    paths:
+      - '**.ts'
+      - '**.tsx'
+      - '**.js'
+      - '**.jsx'
+      - '.github/workflows/react-native-cd.yml'
+      - '**.json'
+      - '**.yaml'
+
+jobs:
+  preview-android:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build staging app
+        if: github.ref == 'refs/heads/dev'
+        run: eas build --platform android --non-interactive --profile staging
+
+      - name: Build production app
+        if: github.ref == 'refs/heads/main'
+        run: eas build --platform android --non-interactive --profile production
+
+  preview-ios:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2.2.4
+        with:
+          version: 7
+
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'pnpm'
+
+      - name: Setup Expo and EAS
+        uses: expo/expo-github-action@v7
+        with:
+          expo-version: latest
+          eas-version: latest
+          eas-cache: true
+          expo-cache: true
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build staging app
+        if: github.ref == 'refs/heads/dev'
+        run: eas build --platform ios --non-interactive --profile staging
+
+      - name: Build production app
+        if: github.ref == 'refs/heads/main'
+        run: eas build --platform ios --non-interactive --profile production
