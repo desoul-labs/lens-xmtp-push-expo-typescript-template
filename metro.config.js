@@ -13,12 +13,7 @@ config.transformer = {
 };
 
 config.resolver = {
-  extraNodeModules: {
-    stream: require.resolve('readable-stream'),
-    crypto: require.resolve('crypto-browserify'),
-    http: require.resolve('stream-http'),
-    https: require.resolve('https-browserify'),
-  },
+  extraNodeModules: require('expo-crypto-polyfills'),
 };
 
 module.exports = config;
