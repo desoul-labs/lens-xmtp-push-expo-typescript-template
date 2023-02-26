@@ -1,59 +1,34 @@
-import './polyfills';
-
-import { useEffect, useState } from 'react';
-import { Client } from '@xmtp/xmtp-js';
 import { StatusBar } from 'expo-status-bar';
-import * as PushAPI from '@pushprotocol/restapi';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { Platform, StyleSheet, Text, View, Button } from 'react-native';
+import { LensConfig, LensProvider, staging } from '@lens-protocol/react';
 import {
-  IBindings,
-  LensConfig,
-  LensProvider,
-  useActiveProfile,
+  useWalletConnect,
+  WalletConnectProviderProps,
+  withWalletConnect,
+} from '@walletconnect/react-native-dapp';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+import { providers } from 'ethers';
+import { useCallback, useMemo } from 'react';
+import {
   useWalletLogin,
   useWalletLogout,
-  staging,
+  useActiveProfile,
 } from '@lens-protocol/react';
-import { providers, Wallet } from 'ethers';
-import { RequiredSigner } from '@lens-protocol/react/dist/wallet/adapters/ConcreteWallet';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState, useEffect } from 'react';
+import * as PushAPI from '@pushprotocol/restapi';
+import { Client } from '@xmtp/xmtp-js';
 
-const provider = new providers.InfuraProvider('maticmum');
-
-// This is the private key of the `@jsisthebest.test` profile
-// It's a public private key so anyone can modify the profile
-// For your own convenience change to the private key of a new wallet
-const testWalletPrivateKey =
-  '6c434da5e5c0e3a8e0db5cf835d23e04c7592037854f0700c26836be7581c68c';
-
-const wallet = new Wallet(testWalletPrivateKey, provider);
-
-function bindings(): IBindings {
-  return {
-    getProvider: async () => provider,
-    getSigner: async () => wallet as unknown as RequiredSigner,
-  };
-}
-
-const lensConfig: LensConfig = {
-  bindings: bindings(),
-  environment: staging,
-  storage: AsyncStorage,
-};
-
-const LoginButton = () => {
+const LoginButton = ({ provider }: { provider: providers.Web3Provider }) => {
+  const connector = useWalletConnect();
   const { login, isPending: loginPending } = useWalletLogin();
   const { logout, isPending: logoutPending } = useWalletLogout();
   const { data: profile } = useActiveProfile();
 
-  const [xmtp, setXMTP] = useState<Client | null>(null);
   const [channel, setChannel] = useState<any>(null);
+  const [xmtp, setXMTP] = useState<Client | null>(null);
 
   useEffect(() => {
-    const initXMTP = async () => {
-      const xmtpClient = await Client.create(wallet);
-      setXMTP(xmtpClient);
-    };
     const getChannelData = async () => {
       const channelData = await PushAPI.channels.getChannel({
         channel: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // channel address in CAIP
@@ -62,60 +37,49 @@ const LoginButton = () => {
       setChannel(channelData);
     };
 
-    initXMTP();
     getChannelData();
   }, []);
 
   const onLoginPress = async () => {
-    await login(wallet);
+    if (connector.connected) {
+      connector.killSession();
+    }
+
+    await connector.connect();
+    // FIXME: signer is not available here
+    const signer = provider.getSigner();
+
+    const client = await Client.create(signer);
+    setXMTP(client);
+
+    await login(signer);
   };
 
   const onLogoutPress = async () => {
+    await connector.killSession();
     await logout();
   };
 
   const onSendMessage = async () => {
     if (!xmtp) return;
+
     const conversation = await xmtp.conversations.newConversation(
       '0x3F11b27F323b62B159D2642964fa27C46C841897',
     );
     await conversation.send('gm');
   };
 
-  const onSendNotification = async () => {
-    const apiResponse = await PushAPI.payloads.sendNotification({
-      signer: wallet,
-      type: 3, // target
-      identityType: 0, // Minimal payload
-      notification: {
-        title: `[SDK-TEST] notification TITLE:`,
-        body: `[sdk-test] notification BODY`,
-      },
-      payload: {
-        title: `[sdk-test] payload title`,
-        body: `sample msg body`,
-        cta: '',
-        img: '',
-      },
-      recipients: 'eip155:5:0xCdBE6D076e05c5875D90fa35cc85694E1EAFBBd1', // recipient address
-      channel: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // your channel address
-      env: 'staging',
-    });
-
-    console.log(apiResponse.data);
-  };
-
   return (
     <View>
-      {profile && (
+      {connector.connected && (
         <View>
           <Text>XMTP Version: {xmtp?.apiClient.version}</Text>
           <Text>
-            Push Channel: {channel.name}(#{channel.id})
+            Push Channel: {channel?.name}(#{channel?.id})
           </Text>
-          <Text>Lens Profile: @{profile.handle}</Text>
+          <Text>Lens Profile: @{profile?.handle}</Text>
+          <Text>Wallet Address: {connector.accounts[0]}</Text>
           <Button onPress={onSendMessage} title="Send message" />
-          <Button onPress={onSendNotification} title="Send notification" />
           <Button
             disabled={logoutPending}
             onPress={onLogoutPress}
@@ -123,7 +87,7 @@ const LoginButton = () => {
           />
         </View>
       )}
-      {!profile && (
+      {!connector.connected && (
         <Button disabled={loginPending} onPress={onLoginPress} title="Log in" />
       )}
     </View>
@@ -131,11 +95,48 @@ const LoginButton = () => {
 };
 
 const App = () => {
+  const connector = useWalletConnect();
+  const provider = useMemo(
+    () =>
+      new WalletConnectProvider({
+        infuraId: '65d6141f377841e59d706403838ffd26',
+        rpc: {
+          137: 'https://rpc-mainnet.maticvigil.com',
+          80001: 'https://rpc-mumbai.maticvigil.com',
+        },
+        chainId: 137,
+        connector: connector,
+        qrcode: false,
+      }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
+  const ethersProvider = useMemo(
+    () => new providers.Web3Provider(provider),
+    [provider],
+  );
+
+  const bindings = useCallback(() => {
+    return {
+      getProvider: async () => ethersProvider,
+      getSigner: async () => ethersProvider.getSigner(),
+    };
+  }, [ethersProvider]);
+
+  const lensConfig: LensConfig = useMemo(() => {
+    return {
+      bindings: bindings(),
+      environment: staging,
+      storage: AsyncStorage,
+    };
+  }, [bindings]);
+
   return (
     <LensProvider config={lensConfig}>
       <View style={styles.container}>
         <Text>Open up App.tsx to start working on your app!</Text>
-        <LoginButton />
+        <LoginButton provider={ethersProvider} />
         <StatusBar style="auto" />
       </View>
     </LensProvider>
@@ -151,4 +152,19 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+const walletConnectConfig: Partial<WalletConnectProviderProps> = {
+  bridge: 'https://bridge.walletconnect.org',
+  clientMeta: {
+    description: 'Connect with WalletConnect',
+    url: 'https://walletconnect.org',
+    icons: ['https://walletconnect.org/walletconnect-logo.png'],
+    name: 'WalletConnect',
+  },
+  redirectUrl: Platform.OS === 'web' ? window.location.origin : 'app://',
+  storageOptions: {
+    // @ts-ignore
+    asyncStorage: AsyncStorage,
+  },
+};
+
+export default withWalletConnect(App, walletConnectConfig);

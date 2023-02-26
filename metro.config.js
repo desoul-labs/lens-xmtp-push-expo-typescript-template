@@ -13,7 +13,10 @@ config.transformer = {
 };
 
 config.resolver = {
-  extraNodeModules: require('expo-crypto-polyfills'),
+  extraNodeModules: {
+    ...require('node-libs-react-native'),
+    ...require('expo-crypto-polyfills'),
+  },
 };
 
 module.exports = config;

@@ -8,7 +8,6 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'app',
-  jsEngine: 'hermes',
   userInterfaceStyle: 'automatic',
   splash: {
     image: './assets/images/splash.png',
