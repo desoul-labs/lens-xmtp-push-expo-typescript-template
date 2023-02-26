@@ -1,5 +1,3 @@
-import './polyfills';
-
 import { useEffect, useState } from 'react';
 import { Client } from '@xmtp/xmtp-js';
 import { StatusBar } from 'expo-status-bar';
@@ -82,29 +80,6 @@ const LoginButton = () => {
     await conversation.send('gm');
   };
 
-  const onSendNotification = async () => {
-    const apiResponse = await PushAPI.payloads.sendNotification({
-      signer: wallet,
-      type: 3, // target
-      identityType: 0, // Minimal payload
-      notification: {
-        title: `[SDK-TEST] notification TITLE:`,
-        body: `[sdk-test] notification BODY`,
-      },
-      payload: {
-        title: `[sdk-test] payload title`,
-        body: `sample msg body`,
-        cta: '',
-        img: '',
-      },
-      recipients: 'eip155:5:0xCdBE6D076e05c5875D90fa35cc85694E1EAFBBd1', // recipient address
-      channel: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // your channel address
-      env: 'staging',
-    });
-
-    console.log(apiResponse.data);
-  };
-
   return (
     <View>
       {profile && (
@@ -115,7 +90,6 @@ const LoginButton = () => {
           </Text>
           <Text>Lens Profile: @{profile.handle}</Text>
           <Button onPress={onSendMessage} title="Send message" />
-          <Button onPress={onSendNotification} title="Send notification" />
           <Button
             disabled={logoutPending}
             onPress={onLogoutPress}
