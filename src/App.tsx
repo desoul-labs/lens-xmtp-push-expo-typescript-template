@@ -1,42 +1,43 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Client } from '@xmtp/xmtp-js';
 import { StatusBar } from 'expo-status-bar';
 import * as PushAPI from '@pushprotocol/restapi';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import {
-  IBindings,
   LensConfig,
   LensProvider,
   useActiveProfile,
   useWalletLogin,
   useWalletLogout,
   staging,
+  IBindings,
 } from '@lens-protocol/react';
-import { providers, Wallet } from 'ethers';
-import { RequiredSigner } from '@lens-protocol/react/dist/wallet/adapters/ConcreteWallet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import MetaMaskSDK from '@metamask/sdk';
+import { Linking } from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
+import { providers } from 'ethers';
 
-const provider = new providers.InfuraProvider('maticmum');
+const metamask = new MetaMaskSDK({
+  openDeeplink: link => {
+    Linking.openURL(link); // Use React Native Linking method or your favourite way of opening deeplinks
+  },
+  timer: BackgroundTimer, // To keep the app alive once it goes to background
+  dappMetadata: {
+    name: 'My App', // The name of your application
+    url: 'https://myapp.com', // The url of your website
+  },
+});
 
-// This is the private key of the `@jsisthebest.test` profile
-// It's a public private key so anyone can modify the profile
-// For your own convenience change to the private key of a new wallet
-const testWalletPrivateKey =
-  '6c434da5e5c0e3a8e0db5cf835d23e04c7592037854f0700c26836be7581c68c';
+const ethereum = metamask.getProvider();
 
-const wallet = new Wallet(testWalletPrivateKey, provider);
+const web3Provider = new providers.Web3Provider(ethereum);
 
-function bindings(): IBindings {
+const bindings = (): IBindings => {
   return {
-    getProvider: async () => provider,
-    getSigner: async () => wallet as unknown as RequiredSigner,
+    getSigner: async () => web3Provider.getSigner(),
+    getProvider: async () => web3Provider,
   };
-}
-
-const lensConfig: LensConfig = {
-  bindings: bindings(),
-  environment: staging,
-  storage: AsyncStorage,
 };
 
 const LoginButton = () => {
@@ -47,11 +48,9 @@ const LoginButton = () => {
   const [xmtp, setXMTP] = useState<Client | null>(null);
   const [channel, setChannel] = useState<any>(null);
 
+  const [isConnected, setIsConnected] = useState(false);
+
   useEffect(() => {
-    const initXMTP = async () => {
-      const xmtpClient = await Client.create(wallet);
-      setXMTP(xmtpClient);
-    };
     const getChannelData = async () => {
       const channelData = await PushAPI.channels.getChannel({
         channel: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // channel address in CAIP
@@ -60,16 +59,28 @@ const LoginButton = () => {
       setChannel(channelData);
     };
 
-    initXMTP();
     getChannelData();
   }, []);
 
   const onLoginPress = async () => {
-    await login(wallet);
+    await ethereum.request({ method: 'eth_requestAccounts' });
+    await ethereum.request({
+      method: 'wallet_switchEthereumChain',
+      params: [{ chainId: '0x89' }],
+    });
+    setIsConnected(ethereum.isConnected());
+
+    const xmtpClient = await Client.create(web3Provider.getSigner());
+    setXMTP(xmtpClient);
+
+    await login(web3Provider.getSigner());
   };
 
   const onLogoutPress = async () => {
     await logout();
+
+    setXMTP(null);
+    setIsConnected(false);
   };
 
   const onSendMessage = async () => {
@@ -82,13 +93,13 @@ const LoginButton = () => {
 
   return (
     <View>
-      {profile && (
+      {isConnected && (
         <View>
           <Text>XMTP Version: {xmtp?.apiClient.version}</Text>
           <Text>
-            Push Channel: {channel.name}(#{channel.id})
+            Push Channel: {channel?.name}(#{channel?.id})
           </Text>
-          <Text>Lens Profile: @{profile.handle}</Text>
+          <Text>Lens Profile: @{profile?.handle}</Text>
           <Button onPress={onSendMessage} title="Send message" />
           <Button
             disabled={logoutPending}
@@ -97,7 +108,7 @@ const LoginButton = () => {
           />
         </View>
       )}
-      {!profile && (
+      {!isConnected && (
         <Button disabled={loginPending} onPress={onLoginPress} title="Log in" />
       )}
     </View>
@@ -105,6 +116,14 @@ const LoginButton = () => {
 };
 
 const App = () => {
+  const lensConfig = useMemo((): LensConfig => {
+    return {
+      bindings: bindings(),
+      environment: staging,
+      storage: AsyncStorage,
+    };
+  }, []);
+
   return (
     <LensProvider config={lensConfig}>
       <View style={styles.container}>

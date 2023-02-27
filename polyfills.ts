@@ -5,6 +5,7 @@ import '@ethersproject/shims';
 import 'text-encoding';
 import '@azure/core-asynciterator-polyfill';
 import 'react-native-polyfill-globals/auto';
+import 'node-libs-react-native/globals';
 
 // Necessary for @peculiar/webcrypto.
 if (!global.Buffer) {
