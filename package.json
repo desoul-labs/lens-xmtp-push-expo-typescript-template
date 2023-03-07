@@ -27,7 +27,7 @@
   "dependencies": {
     "@azure/core-asynciterator-polyfill": "1.0.2",
     "@ethersproject/shims": "5.7.0",
-    "@lens-protocol/react": "0.4.1",
+    "@lens-protocol/react": "0.5.1",
     "@lens-protocol/react-native-lens-ui-kit": "0.2.1",
     "@peculiar/webcrypto": "1.4.1",
     "@pushprotocol/reactnative": "0.2.0",
