@@ -13,8 +13,8 @@ import {
   staging,
 } from '@lens-protocol/react';
 import { providers, Wallet } from 'ethers';
-import { RequiredSigner } from '@lens-protocol/react/dist/wallet/adapters/ConcreteWallet';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { ENV } from '@pushprotocol/restapi/src/lib/constants';
 
 const provider = new providers.InfuraProvider('maticmum');
 
@@ -29,7 +29,7 @@ const wallet = new Wallet(testWalletPrivateKey, provider);
 function bindings(): IBindings {
   return {
     getProvider: async () => provider,
-    getSigner: async () => wallet as unknown as RequiredSigner,
+    getSigner: async () => wallet,
   };
 }
 
@@ -40,8 +40,8 @@ const lensConfig: LensConfig = {
 };
 
 const LoginButton = () => {
-  const { login, isPending: loginPending } = useWalletLogin();
-  const { logout, isPending: logoutPending } = useWalletLogout();
+  const { execute: login, isPending: loginPending } = useWalletLogin();
+  const { execute: logout, isPending: logoutPending } = useWalletLogout();
   const { data: profile } = useActiveProfile();
 
   const [xmtp, setXMTP] = useState<Client | null>(null);
@@ -55,7 +55,7 @@ const LoginButton = () => {
     const getChannelData = async () => {
       const channelData = await PushAPI.channels.getChannel({
         channel: 'eip155:5:0xD8634C39BBFd4033c0d3289C4515275102423681', // channel address in CAIP
-        env: 'staging',
+        env: ENV.STAGING,
       });
       setChannel(channelData);
     };
