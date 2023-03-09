@@ -31,7 +31,7 @@
     "@lens-protocol/react-native-lens-ui-kit": "0.2.6",
     "@peculiar/webcrypto": "1.4.1",
     "@pushprotocol/reactnative": "0.2.0",
-    "@pushprotocol/restapi": "0.8.0",
+    "@pushprotocol/restapi": "0.8.1",
     "@react-native-async-storage/async-storage": "1.17.11",
     "@react-native-masked-view/masked-view": "0.2.8",
     "@react-navigation/native": "6.1.6",
