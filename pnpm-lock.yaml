@@ -32,7 +32,7 @@ specifiers:
   babel-preset-expo: 9.3.0
   eslint: 8.35.0
   eslint-config-prettier: 8.7.0
-  ethers: 5.7.2
+  ethers: 6.1.0
   expo: 48.0.6
   expo-crypto-polyfills: ^1.1.0
   expo-file-system: ~15.2.2
@@ -67,16 +67,16 @@ specifiers:
 dependencies:
   '@azure/core-asynciterator-polyfill': 1.0.2
   '@ethersproject/shims': 5.7.0
-  '@lens-protocol/react': 0.5.1_6274lpdujgsy3cpiu35qxzmibm
+  '@lens-protocol/react': 0.5.1_nlcqwznxxyfvwqviqbojjl4nn4
   '@lens-protocol/react-native-lens-ui-kit': 0.2.7_shprpgibf4xsohtzuapquhbh6a
   '@peculiar/webcrypto': 1.4.1
   '@pushprotocol/reactnative': 0.2.0_lfsncf6rtbki3gp5kcrl3vyzky
-  '@pushprotocol/restapi': 0.8.1_ethers@5.7.2
+  '@pushprotocol/restapi': 0.8.1_ethers@6.1.0
   '@react-native-async-storage/async-storage': 1.17.11_react-native@0.71.4
   '@react-native-masked-view/masked-view': 0.2.8_asg77qyzeoxodznpkubmbgme7u
   '@react-navigation/native': 6.1.6_asg77qyzeoxodznpkubmbgme7u
   '@xmtp/xmtp-js': 7.13.1
-  ethers: 5.7.2
+  ethers: 6.1.0
   expo: 48.0.6_@babel+core@7.21.0
   expo-crypto-polyfills: 1.1.0_4v5rklfcv67a3hoq2u2ct47tpq
   expo-file-system: 15.2.2_expo@48.0.6
@@ -123,6 +123,10 @@ devDependencies:
   typescript: 4.9.5
 
 packages:
+
+  /@adraffy/ens-normalize/1.8.9:
+    resolution: {integrity: sha512-93OmGCV0vO8+JQ3FHG+gZk/MPHzzMPDRiCiFcCQNTCnHaaxsacO3ScTPGlu2wX2dOtgfalbchPcw1cOYYjHCYQ==}
+    dev: false
 
   /@ampproject/remapping/2.2.0:
     resolution: {integrity: sha512-qRmjj8nj9qmLTQXXmaR1cck3UXSRMPrbsLJAasZpF+t3riI71BXed5ebIOYwQntykeZuhjsdweEc9BxH5Jc26w==}
@@ -2740,7 +2744,7 @@ packages:
       '@jridgewell/resolve-uri': 3.1.0
       '@jridgewell/sourcemap-codec': 1.4.14
 
-  /@lens-protocol/api-bindings/0.5.1_6274lpdujgsy3cpiu35qxzmibm:
+  /@lens-protocol/api-bindings/0.5.1_nlcqwznxxyfvwqviqbojjl4nn4:
     resolution: {integrity: sha512-vnAUpKAZzVqMJQ8kHrDCucVWBDLK1LlNACYisSdlDiYi5t+wGwvoeTsMI2MNcQbrtZ9zOPKy+RH3oTSzEUcKtg==}
     peerDependencies:
       '@faker-js/faker': ^7.6.0
@@ -2751,8 +2755,8 @@ packages:
     dependencies:
       '@apollo/client': 3.7.9_gdcq4dv6opitr3wbfwyjmanyra
       '@faker-js/faker': 7.6.0
-      '@lens-protocol/domain': 0.5.1_vnuyrlzbxne5766focwxfkluce
-      '@lens-protocol/shared-kernel': 0.5.1_ethers@5.7.2
+      '@lens-protocol/domain': 0.5.1_k5rxjdlttsjaomemodq4p4h6ey
+      '@lens-protocol/shared-kernel': 0.5.1_ethers@6.1.0
       graphql: 16.6.0
       graphql-tag: 2.12.6_graphql@16.6.0
       react: 18.2.0
@@ -2767,16 +2771,16 @@ packages:
       - subscriptions-transport-ws
     dev: false
 
-  /@lens-protocol/blockchain-bindings/0.5.1_vnuyrlzbxne5766focwxfkluce:
+  /@lens-protocol/blockchain-bindings/0.5.1_k5rxjdlttsjaomemodq4p4h6ey:
     resolution: {integrity: sha512-6V6knojtKFRYLoTz7LNFJU0A3vvWiGSBVawv04j2+vbXe5hWWamlS/mIrptMc08t0Ae8MK1rbrb6a5mr3M+apw==}
     peerDependencies:
       ethers: ^5.7.2
     dependencies:
       '@ethersproject/abi': 5.7.0
       '@ethersproject/providers': 5.7.2
-      '@lens-protocol/domain': 0.5.1_vnuyrlzbxne5766focwxfkluce
-      '@lens-protocol/shared-kernel': 0.5.1_ethers@5.7.2
-      ethers: 5.7.2
+      '@lens-protocol/domain': 0.5.1_k5rxjdlttsjaomemodq4p4h6ey
+      '@lens-protocol/shared-kernel': 0.5.1_ethers@6.1.0
+      ethers: 6.1.0
       tslib: 2.5.0
     transitivePeerDependencies:
       - '@faker-js/faker'
@@ -2787,7 +2791,7 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/domain/0.5.1_vnuyrlzbxne5766focwxfkluce:
+  /@lens-protocol/domain/0.5.1_k5rxjdlttsjaomemodq4p4h6ey:
     resolution: {integrity: sha512-kJXRttraddkORwmQ/mmGKivcfj7IReKX5BWj4ScUlmxjYDkWUs8Z7+MrcOuDGF23ja6JLBO5c6+iZi/c0C+Hug==}
     peerDependencies:
       '@faker-js/faker': ^7.6.0
@@ -2797,7 +2801,7 @@ packages:
     dependencies:
       '@faker-js/faker': 7.6.0
       '@jest/globals': 29.5.0
-      '@lens-protocol/shared-kernel': 0.5.1_ethers@5.7.2
+      '@lens-protocol/shared-kernel': 0.5.1_ethers@6.1.0
       jest-mock-extended: 3.0.3_doipufordlnvh5g4adbwayvyvy
       jest-when: 3.5.2_jest@29.5.0
       tslib: 2.5.0
@@ -2823,7 +2827,7 @@ packages:
       - react-native
     dev: false
 
-  /@lens-protocol/react/0.5.1_6274lpdujgsy3cpiu35qxzmibm:
+  /@lens-protocol/react/0.5.1_nlcqwznxxyfvwqviqbojjl4nn4:
     resolution: {integrity: sha512-DqSnZxJVMlzlbyFs9+fkIC/ehgrSdQtMaalHUrqme+j3AXtGOiwq2jJxOESlPvk97I/LDaoB0JMfeI2ONf/UUQ==}
     peerDependencies:
       ethers: ^5.7.2
@@ -2832,12 +2836,12 @@ packages:
       '@apollo/client': 3.7.9_gdcq4dv6opitr3wbfwyjmanyra
       '@ethersproject/abstract-signer': 5.7.0
       '@ethersproject/providers': 5.7.2
-      '@lens-protocol/api-bindings': 0.5.1_6274lpdujgsy3cpiu35qxzmibm
-      '@lens-protocol/blockchain-bindings': 0.5.1_vnuyrlzbxne5766focwxfkluce
-      '@lens-protocol/domain': 0.5.1_vnuyrlzbxne5766focwxfkluce
-      '@lens-protocol/shared-kernel': 0.5.1_ethers@5.7.2
-      '@lens-protocol/storage': 0.5.1_ethers@5.7.2
-      ethers: 5.7.2
+      '@lens-protocol/api-bindings': 0.5.1_nlcqwznxxyfvwqviqbojjl4nn4
+      '@lens-protocol/blockchain-bindings': 0.5.1_k5rxjdlttsjaomemodq4p4h6ey
+      '@lens-protocol/domain': 0.5.1_k5rxjdlttsjaomemodq4p4h6ey
+      '@lens-protocol/shared-kernel': 0.5.1_ethers@6.1.0
+      '@lens-protocol/storage': 0.5.1_ethers@6.1.0
+      ethers: 6.1.0
       graphql: 16.6.0
       jwt-decode: 3.1.2
       lodash: 4.17.21
@@ -2857,22 +2861,22 @@ packages:
       - utf-8-validate
     dev: false
 
-  /@lens-protocol/shared-kernel/0.5.1_ethers@5.7.2:
+  /@lens-protocol/shared-kernel/0.5.1_ethers@6.1.0:
     resolution: {integrity: sha512-sR3YRcVJEvzimcIuPwOs6+VICRda5L8+MYK6ECrbGyusaNwyE/gu8J6SAKpZyQY+YtqlAepJPGSdX3ObtP4Ajw==}
     peerDependencies:
       ethers: ^5.7.2
     dependencies:
       decimal.js: 10.4.3
-      ethers: 5.7.2
+      ethers: 6.1.0
       lodash: 4.17.21
       tslib: 2.5.0
       uuid: 9.0.0
     dev: false
 
-  /@lens-protocol/storage/0.5.1_ethers@5.7.2:
+  /@lens-protocol/storage/0.5.1_ethers@6.1.0:
     resolution: {integrity: sha512-ZuQWcba86256HACvL6QdUVD4KFPxNoruyRCReO/rGjLJjUpFu4mrZBKVVwWCOxpM0KQlhuyuMhhNI4jl0YYbhw==}
     dependencies:
-      '@lens-protocol/shared-kernel': 0.5.1_ethers@5.7.2
+      '@lens-protocol/shared-kernel': 0.5.1_ethers@6.1.0
       tslib: 2.5.0
       zod: 3.20.6
     transitivePeerDependencies:
@@ -2896,6 +2900,10 @@ packages:
     dependencies:
       eslint-scope: 5.1.1
     dev: true
+
+  /@noble/hashes/1.1.2:
+    resolution: {integrity: sha512-KYRCASVTv6aeUi1tsF8/vpyR7zpfs3FUzy2Jqm+MU+LmUKhQ0y2FpfwqkCcxSg2ua4GALJd8k2R76WxwZGbQpA==}
+    dev: false
 
   /@noble/hashes/1.2.0:
     resolution: {integrity: sha512-FZfhjEDbT5GRswV3C6uvLPHMiVD6lQBmpoX5+eSiPaMTXte/IKqI5dykDxzZB/WBeK/CDuQRBWarPdi3FNY2zQ==}
@@ -3039,7 +3047,7 @@ packages:
       - prop-types
     dev: false
 
-  /@pushprotocol/restapi/0.8.1_ethers@5.7.2:
+  /@pushprotocol/restapi/0.8.1_ethers@6.1.0:
     resolution: {integrity: sha512-k0VuEouVP7qYv29tIggUSwzzPI+QwL+FMzb062M40pbawDnGY2fmF4kp630KgtKzgVQhsIZIM+dIdbC67Aq4Qg==}
     peerDependencies:
       ethers: ^5.6.8
@@ -3048,7 +3056,7 @@ packages:
       axios: 0.27.2
       buffer: 6.0.3
       crypto-es: 1.2.7
-      ethers: 5.7.2
+      ethers: 6.1.0
       openpgp: 5.7.0
       tslib: 2.5.0
       uuid: 9.0.0
@@ -3820,6 +3828,10 @@ packages:
 
   /aes-js/3.0.0:
     resolution: {integrity: sha512-H7wUZRn8WpTq9jocdxQ2c8x2sKo9ZVmzfRE13GiNJXfp7NcKYEdvl3vspKjXox6RIG2VtaRe4JFvxG4rqp2Zuw==}
+    dev: false
+
+  /aes-js/4.0.0-beta.3:
+    resolution: {integrity: sha512-/xJX0/VTPcbc5xQE2VUP91y1xN8q/rDfhEzLm+vLc3hYvb5+qHCnpJRuFcrKn63zumK/sCwYYzhG8HP78JYSTA==}
     dev: false
 
   /agent-base/6.0.2:
@@ -6242,6 +6254,21 @@ packages:
       '@ethersproject/wallet': 5.7.0
       '@ethersproject/web': 5.7.1
       '@ethersproject/wordlists': 5.7.0
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
+    dev: false
+
+  /ethers/6.1.0:
+    resolution: {integrity: sha512-aC45YGbvgXt7Nses5WsdQwc1cUIrrQt32zeFShNW7ZT3RQCIHBnd4nmbE5sJmrp70uTdwkRHkr4cZr1D/YwFPg==}
+    engines: {node: '>=14.0.0'}
+    dependencies:
+      '@adraffy/ens-normalize': 1.8.9
+      '@noble/hashes': 1.1.2
+      '@noble/secp256k1': 1.7.1
+      aes-js: 4.0.0-beta.3
+      tslib: 2.4.0
+      ws: 8.5.0
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -12078,6 +12105,10 @@ packages:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
     dev: true
 
+  /tslib/2.4.0:
+    resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
+    dev: false
+
   /tslib/2.4.1:
     resolution: {integrity: sha512-tGyy4dAjRIEwI7BzsB0lynWgOpfqjUdq91XXAlIWD2OwKBH7oCl/GZG/HT4BOHrTlPMOASlMQ7veyTqpmRcrNA==}
     dev: false
@@ -12700,6 +12731,19 @@ packages:
       utf-8-validate:
         optional: true
     dev: true
+
+  /ws/8.5.0:
+    resolution: {integrity: sha512-BWX0SWVgLPzYwF8lTzEy1egjhS4S4OEAHfsO8o65WOVsrnSRGaSiUaa9e0ggGlkMTtBlmOpEXiie9RUcBO86qg==}
+    engines: {node: '>=10.0.0'}
+    peerDependencies:
+      bufferutil: ^4.0.1
+      utf-8-validate: ^5.0.2
+    peerDependenciesMeta:
+      bufferutil:
+        optional: true
+      utf-8-validate:
+        optional: true
+    dev: false
 
   /xcode/3.0.1:
     resolution: {integrity: sha512-kCz5k7J7XbJtjABOvkc5lJmkiDh8VhjVCGNiqdKCscmVpdVUpEAyXv1xmCLkQJ5dsHqx3IPO4XW+NTDhU/fatA==}
