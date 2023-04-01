@@ -26,7 +26,7 @@ dependencies:
     version: 1.4.3
   '@pushprotocol/reactnative':
     specifier: 0.2.0
-    version: 0.2.0(@react-native-masked-view/masked-view@0.2.8)(expo-file-system@15.2.2)(expo-linear-gradient@12.1.2)(expo@48.0.9)(prop-types@15.8.1)(react-native-svg@13.4.0)(react-native-video@5.2.1)(react-native-youtube@2.0.2)(react-native@0.71.4)(react@18.2.0)
+    version: 0.2.0(@react-native-masked-view/masked-view@0.2.9)(expo-file-system@15.2.2)(expo-linear-gradient@12.1.2)(expo@48.0.9)(prop-types@15.8.1)(react-native-svg@13.4.0)(react-native-video@5.2.1)(react-native-youtube@2.0.2)(react-native@0.71.4)(react@18.2.0)
   '@pushprotocol/restapi':
     specifier: 0.8.1
     version: 0.8.1(ethers@5.7.2)
@@ -34,8 +34,8 @@ dependencies:
     specifier: 1.17.11
     version: 1.17.11(react-native@0.71.4)
   '@react-native-masked-view/masked-view':
-    specifier: 0.2.8
-    version: 0.2.8(react-native@0.71.4)(react@18.2.0)
+    specifier: 0.2.9
+    version: 0.2.9(react-native@0.71.4)(react@18.2.0)
   '@react-navigation/native':
     specifier: 6.1.6
     version: 6.1.6(react-native@0.71.4)(react@18.2.0)
@@ -3060,7 +3060,7 @@ packages:
     resolution: {integrity: sha512-Vvn3zZrhQZkkBE8LSuW3em98c0FwgO4nxzv6OdSxPKJIEKY2bGbHn+mhGIPerzI4twdxaP8/0+06HBpwf345Lw==}
     dev: false
 
-  /@pushprotocol/reactnative@0.2.0(@react-native-masked-view/masked-view@0.2.8)(expo-file-system@15.2.2)(expo-linear-gradient@12.1.2)(expo@48.0.9)(prop-types@15.8.1)(react-native-svg@13.4.0)(react-native-video@5.2.1)(react-native-youtube@2.0.2)(react-native@0.71.4)(react@18.2.0):
+  /@pushprotocol/reactnative@0.2.0(@react-native-masked-view/masked-view@0.2.9)(expo-file-system@15.2.2)(expo-linear-gradient@12.1.2)(expo@48.0.9)(prop-types@15.8.1)(react-native-svg@13.4.0)(react-native-video@5.2.1)(react-native-youtube@2.0.2)(react-native@0.71.4)(react@18.2.0):
     resolution: {integrity: sha512-LiwHjSQOT3aQLhY3WVDBQ/xNmTSCJP/Kxiq2QYSzJ813ykG7krQ/cQVrBTPFAPg/zVJoK01ujiapkE4vybBpmA==}
     peerDependencies:
       '@react-native-masked-view/masked-view': ^0.2.7
@@ -3073,7 +3073,7 @@ packages:
       react-native-video: ^5.2.0
       react-native-youtube: ^2.0.2
     dependencies:
-      '@react-native-masked-view/masked-view': 0.2.8(react-native@0.71.4)(react@18.2.0)
+      '@react-native-masked-view/masked-view': 0.2.9(react-native@0.71.4)(react@18.2.0)
       expo: 48.0.9(@babel/core@7.21.4)
       expo-file-system: 15.2.2(expo@48.0.9)
       expo-linear-gradient: 12.1.2(expo@48.0.9)
@@ -3333,8 +3333,8 @@ packages:
     resolution: {integrity: sha512-+zDZ20NUnSWghj7Ku5aFphMzuM9JulqCW+aPXT6IfIXFbb8tzYTTOSeRFOtuekJ99ibW2fUCSsjuKNlwDIbHFg==}
     dev: true
 
-  /@react-native-masked-view/masked-view@0.2.8(react-native@0.71.4)(react@18.2.0):
-    resolution: {integrity: sha512-+1holBPDF1yi/y0uc1WB6lA5tSNHhM7PpTMapT3ypvSnKQ9+C6sy/zfjxNxRA/llBQ1Ci6f94EaK56UCKs5lTA==}
+  /@react-native-masked-view/masked-view@0.2.9(react-native@0.71.4)(react@18.2.0):
+    resolution: {integrity: sha512-Hs4vKBKj+15VxHZHFtMaFWSBxXoOE5Ea8saoigWhahp8Mepssm0ezU+2pTl7DK9z8Y9s5uOl/aPb4QmBZ3R3Zw==}
     peerDependencies:
       react: '>=16'
       react-native: '>=0.57'
