@@ -22,8 +22,8 @@ dependencies:
     specifier: 0.2.7
     version: 0.2.7(@types/node@18.14.0)(react-native@0.71.4)(react@18.2.0)
   '@peculiar/webcrypto':
-    specifier: 1.4.1
-    version: 1.4.1
+    specifier: 1.4.3
+    version: 1.4.3
   '@pushprotocol/reactnative':
     specifier: 0.2.0
     version: 0.2.0(@react-native-masked-view/masked-view@0.2.8)(expo-file-system@15.2.2)(expo-linear-gradient@12.1.2)(expo@48.0.9)(prop-types@15.8.1)(react-native-svg@13.4.0)(react-native-video@5.2.1)(react-native-youtube@2.0.2)(react-native@0.71.4)(react@18.2.0)
@@ -2991,8 +2991,8 @@ packages:
       rimraf: 3.0.2
     dev: false
 
-  /@peculiar/asn1-schema@2.3.3:
-    resolution: {integrity: sha512-6GptMYDMyWBHTUKndHaDsRZUO/XMSgIns2krxcm2L7SEExRHwawFvSwNBhqNPR9HJwv3MruAiF1bhN0we6j6GQ==}
+  /@peculiar/asn1-schema@2.3.6:
+    resolution: {integrity: sha512-izNRxPoaeJeg/AyH8hER6s+H7p4itk+03QCa4sbxI3lNdseQYCuxzgsuNK8bTXChtLTjpJz6NmXKA73qLa3rCA==}
     dependencies:
       asn1js: 3.0.5
       pvtsutils: 1.3.2
@@ -3006,15 +3006,15 @@ packages:
       tslib: 2.5.0
     dev: false
 
-  /@peculiar/webcrypto@1.4.1:
-    resolution: {integrity: sha512-eK4C6WTNYxoI7JOabMoZICiyqRRtJB220bh0Mbj5RwRycleZf9BPyZoxsTvpP0FpmVS2aS13NKOuh5/tN3sIRw==}
+  /@peculiar/webcrypto@1.4.3:
+    resolution: {integrity: sha512-VtaY4spKTdN5LjJ04im/d/joXuvLbQdgy5Z4DXF4MFZhQ+MTrejbNMkfZBp1Bs3O5+bFqnJgyGdPuZQflvIa5A==}
     engines: {node: '>=10.12.0'}
     dependencies:
-      '@peculiar/asn1-schema': 2.3.3
+      '@peculiar/asn1-schema': 2.3.6
       '@peculiar/json-schema': 1.1.12
       pvtsutils: 1.3.2
       tslib: 2.5.0
-      webcrypto-core: 1.7.6
+      webcrypto-core: 1.7.7
     dev: false
 
   /@protobufjs/aspromise@1.1.2:
@@ -12499,10 +12499,10 @@ packages:
     engines: {node: '>= 8'}
     dev: false
 
-  /webcrypto-core@1.7.6:
-    resolution: {integrity: sha512-TBPiewB4Buw+HI3EQW+Bexm19/W4cP/qZG/02QJCXN+iN+T5sl074vZ3rJcle/ZtDBQSgjkbsQO/1eFcxnSBUA==}
+  /webcrypto-core@1.7.7:
+    resolution: {integrity: sha512-7FjigXNsBfopEj+5DV2nhNpfic2vumtjjgPmeDKk45z+MJwXKKfhPB7118Pfzrmh4jqOMST6Ch37iPAHoImg5g==}
     dependencies:
-      '@peculiar/asn1-schema': 2.3.3
+      '@peculiar/asn1-schema': 2.3.6
       '@peculiar/json-schema': 1.1.12
       asn1js: 3.0.5
       pvtsutils: 1.3.2
