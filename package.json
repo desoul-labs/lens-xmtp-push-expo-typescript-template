@@ -29,7 +29,7 @@
     "@ethersproject/shims": "5.7.0",
     "@lens-protocol/react": "0.5.1",
     "@lens-protocol/react-native-lens-ui-kit": "0.2.7",
-    "@peculiar/webcrypto": "1.4.1",
+    "@peculiar/webcrypto": "1.4.3",
     "@pushprotocol/reactnative": "0.2.0",
     "@pushprotocol/restapi": "0.8.1",
     "@react-native-async-storage/async-storage": "1.17.11",
