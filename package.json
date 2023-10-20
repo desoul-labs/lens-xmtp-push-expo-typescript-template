@@ -61,9 +61,9 @@
   },
   "devDependencies": {
     "@babel/core": "7.21.4",
-    "@commitlint/cli": "17.4.4",
-    "@commitlint/config-conventional": "17.4.4",
-    "@commitlint/types": "17.4.4",
+    "@commitlint/cli": "17.8.1",
+    "@commitlint/config-conventional": "17.8.1",
+    "@commitlint/types": "17.8.1",
     "@jest/types": "29.5.0",
     "@react-native-community/eslint-config": "3.2.0",
     "@types/react": "18.0.31",
